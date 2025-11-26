@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R7 TECHNOLOGY | Fundas para Celulares</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts (Opcional para estilo tech) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        green: {
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000;
+            color: #e5e7eb;
+        }
+        /* Efecto neón suave */
+        .neon-border {
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-green-500 selection:text-black">
+
+    <!-- Navbar -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-green-900/30 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="bg-green-600 p-2 rounded text-black group-hover:bg-green-500 transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">
+                        <i data-lucide="smartphone" class="w-6 h-6 stroke-2"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-black text-white tracking-tighter leading-none">R7</span>
+                        <span class="text-sm font-bold text-green-500 tracking-widest leading-none">TECHNOLOGY</span>
+                    </div>
+                </div>
+                
+                <!-- Menú Escritorio -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <button onclick="window.scrollTo(0,0)" class="text-gray-300 hover:text-green-400 font-medium transition hover:scale-105">Inicio</button>
+                    <button onclick="openModal()" class="text-gray-300 hover:text-green-400 font-medium transition hover:scale-105">Solicitar Funda</button>
+                    <button onclick="openWhatsAppGeneral()" class="bg-transparent border-2 border-green-600 text-green-500 hover:bg-green-600 hover:text-black px-6 py-2 font-bold transition uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        WhatsApp
+                    </button>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-green-500 p-2 hover:bg-green-900/20 rounded transition">
+                        <i data-lucide="menu" id="menuIcon" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobileMenu" class="hidden md:hidden bg-zinc-900 border-b border-green-900">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <button onclick="window.scrollTo(0,0); toggleMobileMenu()" class="block w-full text-left px-3 py-3 text-gray-300 hover:text-green-400 hover:bg-black font-bold border-b border-zinc-800">INICIO</button>
+                <button onclick="openModal(); toggleMobileMenu()" class="w-full mt-4 bg-green-600 text-black px-4 py-4 font-black uppercase tracking-wide flex justify-center items-center gap-2 hover:bg-green-500 transition shadow-lg">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                    BUSCAR FUNDA
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FORMULARIO MODAL (Popup) -->
+    <div id="modalForm" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-zinc-900 border-2 border-green-600/50 rounded-lg shadow-[0_0_50px_rgba(22,163,74,0.2)] w-full max-w-md relative overflow-hidden transform transition-all scale-95" id="modalContent">
+            
+            <!-- Header Modal -->
+            <div class="bg-zinc-950 p-5 border-b border-zinc-800 flex justify-between items-center">
+                <h3 class="text-xl font-black text-white flex items-center gap-2 tracking-tight">
+                    <i data-lucide="search" class="text-green-500 w-6 h-6"></i>
+                    BUSCADOR R7
+                </h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white hover:bg-red-500/20 p-2 rounded-full transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <!-- Cuerpo Formulario -->
+            <form id="contactForm" onsubmit="sendToWhatsApp(event)" class="p-6 space-y-5 bg-zinc-900">
+                <p class="text-gray-300 text-sm font-medium leading-relaxed">
+                    Completa los datos para llevarte directo a nuestro WhatsApp con tu pedido listo.
+                </p>
+
+                <!-- Campo Nombre -->
+                <div class="space-y-2">
+                    <label class="text-green-500 text-xs font-bold uppercase tracking-widest">Tu Nombre</label>
+                    <div class="relative group">
+                        <i data-lucide="user" class="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-green-500 transition-colors w-5 h-5"></i>
+                        <input type="text" id="name" required placeholder="Ej: David Ortiz" 
+                            class="w-full bg-black border border-zinc-700 text-white p-3 pl-10 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition h-12 placeholder-gray-600">
+                    </div>
+                </div>
+
+                <!-- Campo Modelo -->
+                <div class="space-y-2">
+                    <label class="text-green-500 text-xs font-bold uppercase tracking-widest">Modelo de Celular</label>
+                    <div class="relative group">
+                        <i data-lucide="smartphone" class="absolute left-3 top-3.5 text-gray-500 group-focus-within:text-green-500 transition-colors w-5 h-5"></i>
+                        <input type="text" id="phoneModel" required placeholder="Ej: iPhone 14 Pro, S23 Ultra..." 
+                            class="w-full bg-black border border-zinc-700 text-white p-3 pl-10 rounded focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition h-12 placeholder-gray-600">
+                    </div>
+                </div>
+
+                <!-- Campo Preferencia -->
+                <div class="space-y-2">
+                    <label class="text-gray-500 text-xs font-bold uppercase tracking-widest">Preferencia (Opcional)</label>
+                    <input type="text" id="preference" placeholder="Ej: Color negro, transparente..." 
+                        class="w-full bg-black border border-zinc-700 text-white p-3 rounded focus:border-green-500 outline-none transition h-12 placeholder-gray-600">
+                </div>
+
+                <!-- Botón Enviar -->
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-black font-black py-4 mt-4 text-lg uppercase tracking-wide rounded shadow-[0_4px_14px_0_rgba(22,163,74,0.39)] hover:shadow-[0_6px_20px_rgba(22,163,74,0.23)] hover:-translate-y-1 transition-all flex justify-center items-center gap-2">
+                    <i data-lucide="message-circle" class="w-6 h-6 fill-black"></i>
+                    <span>ENVIAR AL WHATSAPP</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative bg-zinc-900 overflow-hidden flex-grow flex items-center min-h-[70vh]">
+        <!-- Background Effects -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+            <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-green-600 rounded-full blur-[128px]"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-green-900 rounded-full blur-[128px]"></div>
+            <div class="absolute top-[40%] left-[30%] w-64 h-64 bg-green-500/20 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10 flex flex-col items-center text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-green-900/30 border border-green-500/30 rounded-full text-green-400 text-sm font-bold mb-8 shadow-[0_0_15px_rgba(22,163,74,0.2)] animate-fade-in">
+                <i data-lucide="zap" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i>
+                <span>LA MEJOR CALIDAD EN ACCESORIOS</span>
+            </div>
+            
+            <!-- Headline -->
+            <h1 class="text-5xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-tight">
+                ¿BUSCAS FUNDA <br/>
+                PARA TU <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-600">CELULAR?</span>
+            </h1>
+            
+            <!-- Subheadline -->
+            <p class="text-lg md:text-2xl text-gray-400 mb-12 max-w-2xl font-light">
+                En <strong>R7 TECHNOLOGY</strong> tenemos la variedad más completa. 
+                Simplemente dinos tu modelo y te mostramos las opciones disponibles.
+            </p>
+            
+            <!-- BOTÓN PRINCIPAL -->
+            <button onclick="openModal()" class="group relative bg-green-600 hover:bg-green-500 text-black text-xl md:text-3xl font-black px-12 py-8 rounded-sm shadow-[0_0_30px_rgba(22,163,74,0.4)] hover:shadow-[0_0_60px_rgba(22,163,74,0.6)] transition-all duration-300 transform hover:-translate-y-2 w-full md:w-auto flex flex-col items-center justify-center gap-3 border-2 border-green-400">
+                <div class="flex items-center gap-4">
+                    <i data-lucide="search" class="w-9 h-9 stroke-[3px]"></i>
+                    <span>BUSCAR FUNDA AHORA</span>
+                </div>
+                <span class="text-sm font-bold opacity-80 uppercase tracking-[0.2em] text-black">Clic para chatear</span>
+            </button>
+
+            <p class="mt-8 text-gray-500 text-sm">
+                Atención personalizada vía WhatsApp 
+                <span class="block text-green-500 font-mono mt-2 text-xl tracking-widest">829-437-9911</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-black border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-zinc-900/50 p-8 border-l-4 border-green-600 hover:bg-zinc-900 transition duration-300 group">
+                <i data-lucide="shield" class="text-green-500 mb-4 w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-white text-xl mb-2">Máxima Protección</h3>
+                <p class="text-gray-400">Materiales de alta resistencia diseñados para cuidar tu inversión de caídas y golpes.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-zinc-900/50 p-8 border-l-4 border-green-600 hover:bg-zinc-900 transition duration-300 group">
+                <i data-lucide="check-circle" class="text-green-500 mb-4 w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-white text-xl mb-2">Calidad Garantizada</h3>
+                <p class="text-gray-400">Solo vendemos productos probados y duraderos. Satisfacción asegurada.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-zinc-900/50 p-8 border-l-4 border-green-600 hover:bg-zinc-900 transition duration-300 group">
+                <i data-lucide="message-circle" class="text-green-500 mb-4 w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                <h3 class="font-bold text-white text-xl mb-2">Atención Rápida</h3>
+                <p class="text-gray-400">Escríbenos y recibe fotos reales de los productos disponibles al instante.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 text-gray-500 py-12 border-t border-zinc-900 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <div class="bg-green-900/30 p-1 rounded text-green-600">
+                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                </div>
+                <span class="text-xl font-bold text-gray-300">R7 TECHNOLOGY</span>
+            </div>
+            
+            <div class="text-sm text-center md:text-right">
+                © <span id="year"></span> R7 Technology. Todos los derechos reservados.
+            </div>
+
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-green-500 transition hover:scale-110"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:text-green-500 transition hover:scale-110"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Funcionalidad -->
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const phoneNumber = "18294379911";
+
+        // Lógica del Modal
+        const modal = document.getElementById('modalForm');
+        const modalContent = document.getElementById('modalContent');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            // Necesitamos un pequeño delay para que la transición CSS funcione
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Cerrar modal si se hace click fuera
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // WhatsApp General
+        function openWhatsAppGeneral() {
+            const message = "Hola R7 Technology, tengo una consulta general sobre sus accesorios.";
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // Envío del Formulario
+        function sendToWhatsApp(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phoneModel = document.getElementById('phoneModel').value;
+            const preference = document.getElementById('preference').value;
+
+            if (!name || !phoneModel) {
+                alert("Por favor completa el nombre y el modelo.");
+                return;
+            }
+
+            const message = `*SOLICITUD DE FUNDA - R7 TECHNOLOGY* 📱\n\n👤 *Cliente:* ${name}\n📱 *Modelo:* ${phoneModel}\n🎨 *Preferencia:* ${preference || "Sin preferencia específica"}\n\n👋 Hola, envíenme fotos de las fundas disponibles para este modelo por favor.`;
+
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Abrir WhatsApp
+            window.open(url, '_blank');
+            
+            // Limpiar y cerrar
+            document.getElementById('contactForm').reset();
+            closeModal();
+        }
+    </script>
+</body>
+</html>
+
